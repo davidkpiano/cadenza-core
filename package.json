@@ -1,0 +1,27 @@
+{
+  "name": "cadenza-core",
+  "version": "0.0.1",
+  "description": "Core component engine for Sass Cadenza framework.",
+  "main": "scss/_cadenza-core.scss",
+  "dependencies": {
+    "sassdash": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "true-cli tests/tests.scss"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidkpiano/cadenza-core.git"
+  },
+  "keywords": [
+    "cadenza",
+    "cadenza-core"
+  ],
+  "author": "David Khourshid <davidkpiano@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidkpiano/cadenza-core/issues"
+  },
+  "homepage": "https://github.com/davidkpiano/cadenza-core"
+}
