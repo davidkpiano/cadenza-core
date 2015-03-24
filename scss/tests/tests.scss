@@ -1,0 +1,19 @@
+@import '../../bower_components/true/sass/true';
+@import '../cadenza-core';
+
+@include test-module('c mixin') {
+    @include test('should properly register component') {
+        $decls: ('margin': 10px, 'color': blue);
+
+        %foo {
+            @include c($decls);
+        }
+
+        $key: _c-component-key('%foo');
+
+        @include assert-equal(_get($__components__, $key), $decls);
+    }
+}
+
+
+@include report();

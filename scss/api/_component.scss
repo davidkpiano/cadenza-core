@@ -1,0 +1,15 @@
+
+@function _c-component-key($selector: &) {
+    @return (
+        'selector': selector-parse($selector),
+        'media': 'all'
+    );
+}
+
+@mixin c($declarations) {
+    @if type-of($declarations) == 'map' {
+        $__components__: _set($__components__, _c-component-key(&), $declarations) !global;
+    }
+
+    @content;
+}
