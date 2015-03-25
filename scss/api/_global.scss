@@ -1,2 +1,8 @@
 
 $__components__: () !global;
+
+@mixin c-initialize() {
+    $_: static-set('c-media', null);
+}
+
+@include c-initialize();

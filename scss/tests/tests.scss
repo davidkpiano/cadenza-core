@@ -1,8 +1,14 @@
 @import '../../bower_components/true/sass/true';
 @import '../cadenza-core';
 
+@mixin c-test-before() {
+    $__components__: () !global;
+}
+
 @include test-module('c mixin') {
     @include test('should properly register component') {
+        @include c-test-before();
+
         $decls: ('margin': 10px, 'color': blue);
 
         %foo {
@@ -12,6 +18,44 @@
         $key: _c-component-key('%foo');
 
         @include assert-equal(_get($__components__, $key), $decls);
+    }
+}
+
+@include test-module('c-media mixin') {
+    @include test('should properly set media query for a component when declared inside selector') {
+        @include c-test-before();
+        $media-query: 'max-width: 100px';
+        $actual: null;
+
+        %foo {
+            @include c-media($media-query) {
+                @include c((
+                    height: 10px
+                )) {
+                    $actual: c();
+                }
+            }
+        }
+
+        @include assert-equal(_get($actual, 'media'), $media-query);
+    }
+
+    @include test('should properly set media query for a component when declared outside selector') {
+        @include c-test-before();
+        $media-query: 'min-width: 1px';
+        $actual: null;
+
+        @include c-media($media-query) {
+            %foo {
+                @include c((
+                    height: 10px
+                )) {
+                    $actual: c();
+                }
+            }
+        }
+
+        @include assert-equal(_get($actual, 'media'), $media-query);
     }
 }
 

@@ -1,0 +1,11 @@
+
+
+@mixin c-context($static-key, $static-value: null) {
+    $previous-static-value: static-get($static-key);
+    
+    $_: static-set($static-key, $static-value);
+
+    @content;
+
+    $_: static-set($static-key, $previous-static-value);
+}

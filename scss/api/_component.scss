@@ -2,14 +2,27 @@
 @function _c-component-key($selector: &) {
     @return (
         'selector': selector-parse($selector),
-        'media': 'all'
+        'media': static-get('c-media')
     );
 }
 
 @mixin c($declarations) {
     @if type-of($declarations) == 'map' {
-        $__components__: _set($__components__, _c-component-key(&), $declarations) !global;
-    }
+        $component-key: _c-component-key(&);
 
-    @content;
+        @include c-context('c-component', $component-key) {
+            $__components__: _set(
+                $__components__,
+                $component-key,
+                $declarations) !global;
+
+            @content;
+        }
+    }
+}
+
+@function c($selector: null) {
+    @if $selector == null {
+        @return static-get('c-component');
+    }
 }
