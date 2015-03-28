@@ -1,7 +1,9 @@
 
 
 @mixin c-media($query) {
-    @include c-context('c-media', $query) {
-        @content;
+    @if $query {    
+        @include c-context('c-media', $query) {
+            @content;
+        }
     }
 }

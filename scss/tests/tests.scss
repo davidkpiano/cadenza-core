@@ -6,10 +6,10 @@
 }
 
 @include test-module('c mixin') {
+    $decls: ('margin': 10px, 'color': blue);
+
     @include test('should properly register component') {
         @include c-test-before();
-
-        $decls: ('margin': 10px, 'color': blue);
 
         %foo {
             @include c($decls);
@@ -22,9 +22,10 @@
 }
 
 @include test-module('c-media mixin') {
+    $media-query: 'max-width: 100px';
+
     @include test('should properly set media query for a component when declared inside selector') {
         @include c-test-before();
-        $media-query: 'max-width: 100px';
         $actual: null;
 
         %foo {
@@ -42,7 +43,6 @@
 
     @include test('should properly set media query for a component when declared outside selector') {
         @include c-test-before();
-        $media-query: 'min-width: 1px';
         $actual: null;
 
         @include c-media($media-query) {
@@ -56,6 +56,30 @@
         }
 
         @include assert-equal(_get($actual, 'media'), $media-query);
+    }
+
+    @include test('should override ancestor media context') {
+        @include c-test-before();
+        $media-query-outer: 'min-width: 1px';
+        $actual-inner: null;
+        $actual-outer: null;
+
+        @include c-media($media-query-outer) {        
+            %foo {        
+                @include c-media($media-query) {
+                    @include c((height: 10px)) {
+                        $actual-inner: c();
+                    }
+                }
+
+                @include c((height: 10px)) {
+                    $actual-outer: c(); 
+                }
+            }
+        }
+
+        @include assert-equal(_get($actual-inner, 'media'), $media-query);
+        @include assert-equal(_get($actual-outer, 'media'), $media-query-outer);
     }
 }
 
